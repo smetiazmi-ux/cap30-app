@@ -1,0 +1,6 @@
+{
+  "name": "Cap 30 - Suivi de Rétablissement & Sevrage",
+  "description": "Plateforme interactive de suivi de sevrage et de rétablissement avec double vue Patient et Accompagnateur, compteur de progression, routines quotidiennes et alertes SOS en temps réel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
