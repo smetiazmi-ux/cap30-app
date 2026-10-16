@@ -39,7 +39,6 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onShowQr }) =
       </div>
 
       <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
-        {/* Bouton pour afficher le QR Code */}
         <button
           onClick={() => onShowQr(patient)}
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors"
@@ -48,7 +47,6 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient, onShowQr }) =
           <QrCode className="w-4 h-4" /> QR Code
         </button>
 
-        {/* Bouton pour voir le détail */}
         <button
           onClick={() => setSelectedPatientId(patient.id)}
           className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
