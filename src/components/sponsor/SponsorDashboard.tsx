@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Users, Calendar as CalendarIcon, Activity } from 'lucide-react';
-import { useRecovery } from '../../context/RecoveryContext';
+import { useRecovery, Patient } from '../../context/RecoveryContext';
 import { PatientCard } from './PatientCard';
 import { AddPatientModal } from './AddPatientModal';
 import { PatientQrModal } from './PatientQrModal';
@@ -9,11 +9,10 @@ interface SponsorDashboardProps {
   activeTab: 'dashboard' | 'patients' | 'calendar';
 }
 
-export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab }) => {
+export const SponsorDashboard: React.FC<SponsorDashboardProps> = () => {
   const { patients } = useRecovery();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   
-  // État pour gérer le QR Code du patient nouvellement créé ou sélectionné
   const [qrModalData, setQrModalData] = useState<{ isOpen: boolean; name: string; id: string }>({
     isOpen: false,
     name: '',
@@ -21,7 +20,6 @@ export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab })
   });
 
   const handlePatientCreated = (patientName: string, patientId: string) => {
-    // Afficher le QR Code immédiatement après la création du patient
     setQrModalData({
       isOpen: true,
       name: patientName,
@@ -31,7 +29,6 @@ export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab })
 
   return (
     <div className="space-y-6">
-      {/* En-tête et Bouton d'action */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Tableau de bord Accompagnateur</h1>
@@ -45,7 +42,6 @@ export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab })
         </button>
       </div>
 
-      {/* Cartes de statistiques rapide */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4">
           <div className="p-3 bg-blue-50 text-blue-600 rounded-xl">
@@ -78,7 +74,6 @@ export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab })
         </div>
       </div>
 
-      {/* Liste des patients */}
       <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Liste des patients</h2>
         
@@ -95,21 +90,26 @@ export const SponsorDashboard: React.FC<SponsorDashboardProps> = ({ activeTab })
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {patients.map((patient) => (
-              <PatientCard key="{patient.id}" onShowQr="{(p)" patient="{patient}"> setQrModalData({ isOpen: true, name: p.name, id: p.id })}
+            {patients.map((patient: Patient) => (
+              <PatientCard 
+                key={patient.id} 
+                patient={patient} 
+                onShowQr={(p) => setQrModalData({ isOpen: true, name: p.name, id: p.id })}
               />
             ))}
           </div>
         )}
       </div>
 
-      {/* Modal d'ajout de patient */}
-      <AddPatientModal isOpen="{isAddModalOpen}" onClose="{()"> setIsAddModalOpen(false)}
+      <AddPatientModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)}
         onPatientCreated={handlePatientCreated}
       />
 
-      {/* Modal d'affichage du QR Code */}
-      <PatientQrModal isOpen="{qrModalData.isOpen}" onClose="{()"> setQrModalData({ isOpen: false, name: '', id: '' })}
+      <PatientQrModal 
+        isOpen={qrModalData.isOpen} 
+        onClose={() => setQrModalData({ isOpen: false, name: '', id: '' })}
         patientName={qrModalData.name}
         patientId={qrModalData.id}
       />
